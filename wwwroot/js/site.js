@@ -1,5 +1,5 @@
 ﻿async function getAgents() {
-    let response = await fetch('https://localhost:32770/api/location');
+    let response = await fetch('https://localhost:32768/api/location');
     let result = await response.json();
     return result;
 }

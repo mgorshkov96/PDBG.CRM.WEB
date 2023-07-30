@@ -27,7 +27,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=App}/{action=Map}/{id?}");
+    pattern: "{controller=App}/{action=AgentsOnMap}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

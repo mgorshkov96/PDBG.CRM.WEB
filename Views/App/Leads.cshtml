@@ -1,6 +1,99 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model PDBG.CRM.WEB.Models.LeadsViewModel;
 
-<p>Use this page to detail your site's privacy policy.</p>
+@{
+    ViewData["Title"] = "Список заявок";
+    //ViewData["Today"] = DateTime.Now.ToString("yyyy-MM-dd");value="@ViewData["Today"]"
+}
+
+<div class="leads">
+    <h1>@ViewData["Title"]</h1>
+    <div class="filter-table">
+        <form asp-controller="App" asp-action="Leads" class="filter-table-form">
+            <label>Период с </label>
+            <input name="dateFrom" type="date" value="@Model.LeadsFilterViewModel.EnteredDateFrom" />
+            <label> по </label>
+            <input name="dateTo" type="date" value="@Model.LeadsFilterViewModel.EnteredDateTo" />
+            <label>Агент </label>
+            <select name="agent" asp-for="LeadsFilterViewModel.SelectedAgent" asp-items="Model.LeadsFilterViewModel.Agents"></select>
+            <label>Диспетчер </label>
+            <select name="disp" asp-for="LeadsFilterViewModel.SelectedDisp" asp-items="Model.LeadsFilterViewModel.Disps"></select>
+            <button type="submit">Применить</button>
+        </form>
+    </div>
+
+    <div class="leads-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>                    
+                    <th>Дата создания</th>
+                    <th>Статус</th>
+                    <th>Диспетчер</th>
+                    <th>Адрес</th>                    
+                    <th>Умерший</th>
+                    <th>Агент</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lead in Model.Leads)
+                {                   
+                <tr>
+                    <td><a href="~/App/Lead/@Html.DisplayFor(modelLead => lead.Id)">@Html.DisplayFor(modelLead => lead.Id)</a></td>                    
+                    <td>@lead.Created.ToString("dd.MM.yyyy HH:mm")</td>                    
+                    <td>@Html.DisplayFor(modelLead => lead.Status)</td>
+                    <td>@Html.DisplayFor(modelLead => lead.Disp)</td>
+                    <td>@Html.DisplayFor(modelLead => lead.Address)</td>                    
+                    <td>@Html.DisplayFor(modelLead => lead.Dead)</td>
+                    <td>@Html.DisplayFor(modelLead => lead.Agent)</td>
+                    <td>@Html.DisplayFor(modelLead => lead.Sum)</td>
+                </tr>                   
+                }
+            </tbody> 
+        </table>
+
+        @if (Model.Leads.Count() == 0)
+        {
+            <p class="nothing-found">Ничего не найдено</p>
+        }
+
+        @if (Model.LeadsPageViewModel.HasPreviousPage || Model.LeadsPageViewModel.HasNextPage)
+        {
+            <div class="pagination-div">
+                <ul class="pagination">
+                    @if (Model.LeadsPageViewModel.HasPreviousPage)
+                    {
+                        <a asp-action="Leads"
+                           asp-route-page="@(Model.LeadsPageViewModel.PageNumber - 1)"
+                           asp-route-dateFrom="@(Model.LeadsFilterViewModel.EnteredDateFrom)"
+                           asp-route-dateTo="@(Model.LeadsFilterViewModel.EnteredDateTo)"
+                           asp-route-agent="@(Model.LeadsFilterViewModel.SelectedAgent)"
+                           asp-route-disp="@(Model.LeadsFilterViewModel.SelectedDisp)">
+                        <li class="ref-page previous-page">
+                            &#8249
+                        </li>
+                        </a>
+                    }
+                    @if (Model.LeadsPageViewModel.HasNextPage)
+                    {
+                        <a asp-action="Leads"
+                           asp-route-page="@(Model.LeadsPageViewModel.PageNumber + 1)"
+                           asp-route-dateFrom="@(Model.LeadsFilterViewModel.EnteredDateFrom)"
+                           asp-route-dateTo="@(Model.LeadsFilterViewModel.EnteredDateTo)"
+                           asp-route-agent="@(Model.LeadsFilterViewModel.SelectedAgent)"
+                           asp-route-disp="@(Model.LeadsFilterViewModel.SelectedDisp)">
+                        <li class="ref-page">
+                            &#8250
+                        </li>
+                        </a>
+                    }
+                </ul>
+                <span class="pages-info">
+                    Страница @Model.LeadsPageViewModel.PageNumber из @Model.LeadsPageViewModel.TotalPages
+                </span>
+            </div>           
+        }       
+    </div>
+</div>
+
