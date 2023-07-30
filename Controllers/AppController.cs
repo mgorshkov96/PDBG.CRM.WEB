@@ -50,6 +50,18 @@ namespace PDBG.CRM.WEB.Controllers
 
             return View(leadsViewModel);
         }
+        
+        public async Task<IActionResult> Lead(int id) 
+        {
+            var lead = await db.ViewLeads.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (lead == null)
+            {
+                return NotFound();
+            }
+
+			return View(lead);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
