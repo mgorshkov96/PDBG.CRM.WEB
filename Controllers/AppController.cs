@@ -26,8 +26,8 @@ namespace PDBG.CRM.WEB.Controllers
         {
             if (String.IsNullOrEmpty(dateFrom) || String.IsNullOrEmpty(dateTo)) 
             {
-                dateFrom = DateTime.Now.ToString("yyyy-MM-dd");
-                dateTo = DateTime.Now.ToString("yyyy-MM-dd");
+                dateFrom = DateTime.Now.AddHours(3).ToString("yyyy-MM-dd");
+                dateTo = DateTime.Now.AddHours(3).ToString("yyyy-MM-dd");
             }
 
             var leads = db.getFiltredLeads(dateFrom, dateTo, agent, disp);            
