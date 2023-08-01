@@ -22,7 +22,7 @@ namespace PDBG.CRM.WEB.Controllers
             return View();
         }
 
-        public IActionResult Leads(string dateFrom, string dateTo, int agent = 0, int disp = 0, int page = 1)
+        public async Task<IActionResult> Leads(string dateFrom, string dateTo, int agent = 0, int disp = 0, int page = 1)
         {
             if (String.IsNullOrEmpty(dateFrom) || String.IsNullOrEmpty(dateTo)) 
             {
@@ -30,7 +30,7 @@ namespace PDBG.CRM.WEB.Controllers
                 dateTo = DateTime.Now.AddHours(3).ToString("yyyy-MM-dd");
             }
 
-            var leads = db.getFiltredLeads(dateFrom, dateTo, agent, disp);            
+            var leads = await db.getFiltredLeadsAsync(dateFrom, dateTo, agent, disp);            
 
             // пагинация
             int pageSize = 25;
@@ -39,8 +39,8 @@ namespace PDBG.CRM.WEB.Controllers
             var items = leads.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             // модель представления
-            var agents = db.GetAgents();
-            var disps = db.GetDisps();
+            var agents = await db.GetAgentsAsync();
+            var disps = await db.GetDispsAsync();
 
             LeadsViewModel leadsViewModel = new LeadsViewModel(
                 items,

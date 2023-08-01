@@ -18,7 +18,7 @@ namespace PDBG.CRM.WEB.Models
         public DbSet<Lead> Leads { get; set; }
         public DbSet<ViewLead> ViewLeads { get; set; }
 
-        public IEnumerable<ViewLead>? getFiltredLeads(string strDateFrom, string strDateTo, int agentId, int dispId)
+        public async Task<IEnumerable<ViewLead>> getFiltredLeadsAsync(string strDateFrom, string strDateTo, int agentId, int dispId)
         {
             var leads = from ld in ViewLeads
                         select ld;
@@ -32,34 +32,34 @@ namespace PDBG.CRM.WEB.Models
 
             if (agentId != 0) 
             { 
-                Employee? agent = Employees.FirstOrDefault(x => x.Id == agentId);
+                Employee? agent = await Employees.FirstOrDefaultAsync(x => x.Id == agentId);
                 leads = leads.Where(t => t.Agent == agent.Name);
             }
 
             if (dispId != 0)
             {
-                Employee? disp = Employees.FirstOrDefault(x => x.Id == dispId);
+                Employee? disp = await Employees.FirstOrDefaultAsync(x => x.Id == dispId);
                 leads = leads.Where(t => t.Disp == disp.Name);
             }
 
-            var result = leads.ToList();
+            var result = await leads.ToListAsync();
 
             return result;                       
         }
 
-        public List<Employee> GetDisps()
+        public async Task<List<Employee>> GetDispsAsync()
         {
-            var disps = (from d in Employees
+            var disps = await (from d in Employees
                         where d.RoleId == 1
-                        select d).ToList();
+                        select d).ToListAsync();
             return disps;
         }
 
-        public List<Employee> GetAgents()
+        public async Task<List<Employee>> GetAgentsAsync()
         {
-            var agents = (from d in Employees
+            var agents = await (from d in Employees
                          where d.RoleId == 2
-                         select d).ToList();
+                         select d).ToListAsync();
             return agents;
         }
 

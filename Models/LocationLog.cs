@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-//using Newtonsoft.Json.Converters;
-//using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-//using System.Runtime.InteropServices;
 
 namespace PDBG.CRM.WEB.Models
 {
