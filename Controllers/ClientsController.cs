@@ -5,8 +5,8 @@ namespace PDBG.CRM.WEB.Controllers
 {
     public class ClientsController : Controller
     {
-        MyContext db;
-        public ClientsController(MyContext context)
+        Models.AppContext db;
+        public ClientsController(Models.AppContext context)
         {
             this.db = context;
         }

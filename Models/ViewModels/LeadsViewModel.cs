@@ -1,12 +1,12 @@
-﻿namespace PDBG.CRM.WEB.Models
+﻿namespace PDBG.CRM.WEB.Models.ViewModels
 {
     public class LeadsViewModel
     {
-        public IEnumerable<ViewLead> Leads { get; }
+        public IEnumerable<Lead> Leads { get; }
         public LeadsPageViewModel LeadsPageViewModel { get; }
         public LeadsFilterViewModel LeadsFilterViewModel { get; }
 
-        public LeadsViewModel(IEnumerable<ViewLead> leads, LeadsPageViewModel leadsPageViewModel, LeadsFilterViewModel leadsFilterViewModel)
+        public LeadsViewModel(IEnumerable<Lead> leads, LeadsPageViewModel leadsPageViewModel, LeadsFilterViewModel leadsFilterViewModel)
         {
             Leads = leads;
             LeadsPageViewModel = leadsPageViewModel;

@@ -7,19 +7,20 @@ namespace PDBG.CRM.WEB.Models
     public class Employee
     {
         public int Id { get; set; }
-        
+
+        [Column("amo_id")]
+        public int? AmoId { get; set; }
+
         [Column("role_id")]
         public int RoleId { get; set; }
-
-        [Required]
+        
         public string Name { get; set; }
 
         public string? Phone { get; set; }
 
         [Column("status_id")]
         public int? StatusId { get; set; }
-
-        [Required]
+       
         public int Access { get; set; }
     }
 }

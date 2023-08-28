@@ -1,12 +1,19 @@
+using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.EntityFrameworkCore;
+using PDBG.CRM.WEB.Controllers;
 using PDBG.CRM.WEB.Models;
+using PDBG.CRM.WEB.Models.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 string? connection = builder.Configuration.GetConnectionString("Default");
 
 // Add services to the container.
-builder.Services.AddDbContext<MyContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 33))));
+builder.Services.AddDbContext<PDBG.CRM.WEB.Models.AppContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 33))));
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IAgentStateRepository, EFAgentStateRepository>();
+builder.Services.AddTransient<ILeadRepository, EFLeadRepository>();
+builder.Services.AddTransient<ILocationLogRepository, EFLocationLogRepository>();
+builder.Services.AddTransient<IEmployeeRepository, EFEmployeeRepository>();
 
 var app = builder.Build();
 
@@ -20,14 +27,15 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseStatusCodePages();
 app.UseRouting();
-
 app.UseAuthorization();
+
+
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=App}/{action=AgentsOnMap}/{id?}");
+    pattern: "{controller=Map}/{action=AgentsOnMap}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

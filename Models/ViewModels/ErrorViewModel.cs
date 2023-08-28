@@ -1,4 +1,4 @@
-namespace PDBG.CRM.WEB.Models
+namespace PDBG.CRM.WEB.Models.ViewModels
 {
     public class ErrorViewModel
     {

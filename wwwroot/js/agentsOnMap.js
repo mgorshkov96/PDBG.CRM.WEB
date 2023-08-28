@@ -1,5 +1,6 @@
 ﻿async function getAgents() {
-    let response = await fetch('https://localhost:32768/api/location');
+    let response = await fetch('https://pdbg-crm.ru/api/location');
+    /* https://localhost:32768/api/location */
     let result = await response.json();
     return result;
 }

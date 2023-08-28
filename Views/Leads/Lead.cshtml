@@ -1,4 +1,4 @@
-﻿@model PDBG.CRM.WEB.Models.ViewLead;
+﻿@model PDBG.CRM.WEB.Models.Lead;
 
 @{
 	ViewData["Title"] = "Заявка " + Model.Id;
@@ -9,7 +9,7 @@
 		<table>
 			<tr>
 				<td class="lead-table-header">Статус</td>
-				<td>@Html.DisplayFor(m => m.Status)</td>
+				<td>@Html.DisplayFor(m => m.Status.Name)</td>
 			</tr>
 			<tr>
 				<td class="lead-table-header">Поступила в</td>
@@ -17,7 +17,7 @@
 			</tr>
 			<tr>
 				<td class="lead-table-header">Диспетчер</td>
-				<td>@Html.DisplayFor(m => m.Disp)</td>
+				<td>@Html.DisplayFor(m => m.Disp.Name)</td>
 			</tr>
 			<tr>
 				<td class="lead-table-header">Адрес</td>
@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<td class="lead-table-header">Агент</td>
-				<td>@Html.DisplayFor(m => m.Agent)</td>
+				<td>@Html.DisplayFor(m => m.Agent.Name)</td>
 			</tr>
 			<tr>
 				<td class="lead-table-header">Сумма</td>
@@ -48,5 +48,5 @@
 				<td>@Html.DisplayFor(m => m.RejectionReason)</td>
 			</tr>
 		</table>
-	</div>	
+	</div>
 </div>

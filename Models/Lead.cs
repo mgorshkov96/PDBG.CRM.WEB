@@ -15,7 +15,7 @@ namespace PDBG.CRM.WEB.Models
         public int DispId { get; set; }
 
         [Column("agent_id")]
-        public int AgentId { get; set; }
+        public int? AgentId { get; set; }
 
         [Column("client_id")]
         public int ClientId { get; set; }
@@ -33,12 +33,29 @@ namespace PDBG.CRM.WEB.Models
 
         public string? Comment { get; set; }
 
-        public decimal Sum { get; set; }
+        public decimal? Sum { get; set; }
 
         [Column("rejection_reason")]
         public string? RejectionReason { get; set; }
 
         public Employee? Disp { get; set; }
         public Employee? Agent { get; set; }
+        public LeadStatus? Status { get; set; }
+        public Client? Client { get; set; }
+
+        public Lead(int id, int dispId, int clientId)
+        {
+            Id = id;
+            Created = DateTime.Now.AddHours(3);
+            StatusId = 1;
+            DispId = dispId;
+            ClientId = clientId;            
+        }
+
+        public Lead()
+        {            
+            Created = DateTime.Now.AddHours(3);
+            StatusId = 1;
+        }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace PDBG.CRM.WEB.Models
+namespace PDBG.CRM.WEB.Models.ViewModels
 {
     public class LeadsFilterViewModel
     {
-        public LeadsFilterViewModel(List<Employee> disps, int disp, List<Employee> agents, int agent, /*int leadId, */string dateFrom, string dateTo) 
+        public LeadsFilterViewModel(List<Employee> disps, int disp, List<Employee> agents, int agent, /*int leadId, */string dateFrom, string dateTo)
         {
             disps.Insert(0, new Employee { Name = "Все", Id = 0 });
             agents.Insert(0, new Employee { Name = "Все", Id = 0 });

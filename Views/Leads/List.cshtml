@@ -1,5 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model PDBG.CRM.WEB.Models.LeadsViewModel;
+@using PDBG.CRM.WEB.Models.ViewModels;
+@model LeadsViewModel;
 
 @{
     ViewData["Title"] = "Список заявок";
@@ -9,7 +10,7 @@
 <div class="leads">
     <h1>@ViewData["Title"]</h1>
     <div class="filter-table">
-        <form asp-controller="App" asp-action="Leads" class="filter-table-form">
+        <form asp-controller="Leads" asp-action="List" class="filter-table-form">
             <label>Период с </label>
             <input name="dateFrom" type="date" value="@Model.LeadsFilterViewModel.EnteredDateFrom" />
             <label> по </label>
@@ -26,11 +27,11 @@
         <table>
             <thead>
                 <tr>
-                    <th>Id</th>                    
+                    <th>Id</th>
                     <th>Дата создания</th>
                     <th>Статус</th>
                     <th>Диспетчер</th>
-                    <th>Адрес</th>                    
+                    <th>Адрес</th>
                     <th>Умерший</th>
                     <th>Агент</th>
                     <th>Сумма</th>
@@ -38,19 +39,19 @@
             </thead>
             <tbody>
                 @foreach (var lead in Model.Leads)
-                {                   
-                <tr>
-                    <td><a href="~/App/Lead/@Html.DisplayFor(modelLead => lead.Id)">@Html.DisplayFor(modelLead => lead.Id)</a></td>                    
-                    <td>@lead.Created.ToString("dd.MM.yyyy HH:mm")</td>                    
-                    <td>@Html.DisplayFor(modelLead => lead.Status)</td>
-                    <td>@Html.DisplayFor(modelLead => lead.Disp)</td>
-                    <td>@Html.DisplayFor(modelLead => lead.Address)</td>                    
-                    <td>@Html.DisplayFor(modelLead => lead.Dead)</td>
-                    <td>@Html.DisplayFor(modelLead => lead.Agent)</td>
-                    <td>@Html.DisplayFor(modelLead => lead.Sum)</td>
-                </tr>                   
+                {
+                    <tr>
+                        <td><a href="~/leads/@Html.DisplayFor(modelLead => lead.Id)">@Html.DisplayFor(modelLead => lead.Id)</a></td>
+                        <td>@lead.Created.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>@Html.DisplayFor(modelLead => lead.Status.Name)</td>
+                        <td>@Html.DisplayFor(modelLead => lead.Disp.Name)</td>
+                        <td>@Html.DisplayFor(modelLead => lead.Address)</td>
+                        <td>@Html.DisplayFor(modelLead => lead.Dead)</td>
+                        <td>@Html.DisplayFor(modelLead => lead.Agent.Name)</td>
+                        <td>@Html.DisplayFor(modelLead => lead.Sum)</td>
+                    </tr>
                 }
-            </tbody> 
+            </tbody>
         </table>
 
         @if (Model.Leads.Count() == 0)
@@ -92,8 +93,7 @@
                 <span class="pages-info">
                     Страница @Model.LeadsPageViewModel.PageNumber из @Model.LeadsPageViewModel.TotalPages
                 </span>
-            </div>           
-        }       
+            </div>
+        }
     </div>
 </div>
-
