@@ -8,9 +8,9 @@ namespace PDBG.CRM.WEB.Controllers
     [Route("api/leads")]
     public class LeadsApiController : ControllerBase
     {
-        private Models.AppContext db;
+        private Models.PDBGContext db;
 
-        public LeadsApiController(Models.AppContext db)
+        public LeadsApiController(Models.PDBGContext db)
         {
             this.db = db;
         }

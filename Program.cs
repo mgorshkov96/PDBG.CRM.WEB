@@ -8,13 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 string? connection = builder.Configuration.GetConnectionString("Default");
 
 // Add services to the container.
-builder.Services.AddDbContext<PDBG.CRM.WEB.Models.AppContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 33))));
+builder.Services.AddDbContext<PDBG.CRM.WEB.Models.PDBGContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 33))));
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IAgentStateRepository, EFAgentStateRepository>();
 builder.Services.AddTransient<ILeadRepository, EFLeadRepository>();
 builder.Services.AddTransient<ILocationLogRepository, EFLocationLogRepository>();
 builder.Services.AddTransient<IEmployeeRepository, EFEmployeeRepository>();
-
+builder.Services.AddTransient<IAgentSearchRepository, EFAgentSearchRepository>();
+builder.Services.AddTransient<IAmoAuthRepository, EFAmoAuthRepository>(); 
+builder.Services.AddTransient<IClientRepository, EFClientRepository>();
+builder.Services.AddTransient<IApiKeyRepository, EFApiKeyRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -8,8 +8,8 @@ namespace PDBG.CRM.WEB.Controllers
     [Route("api/location")]
     public class LocationApiController : Controller
     {
-        Models.AppContext db;
-        public LocationApiController(Models.AppContext context)
+        Models.PDBGContext db;
+        public LocationApiController(Models.PDBGContext context)
         {
             this.db = context;
         }

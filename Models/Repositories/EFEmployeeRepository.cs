@@ -4,8 +4,8 @@ namespace PDBG.CRM.WEB.Models.Repositories
 {
     public class EFEmployeeRepository : IEmployeeRepository
     {
-        private AppContext _context;
-        public EFEmployeeRepository(AppContext context)
+        private PDBGContext _context;
+        public EFEmployeeRepository(PDBGContext context)
         {
             _context = context;
         }

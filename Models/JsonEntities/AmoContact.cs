@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace PDBG.CRM.WEB.Models.AmoEntities
+namespace PDBG.CRM.WEB.Models.JsonEntities
 {
     public class AmoContact
     {
@@ -15,5 +15,21 @@ namespace PDBG.CRM.WEB.Models.AmoEntities
 
         [JsonPropertyName("custom_fields_values")]
         public AmoCustomField[]? CustomFieldsValues { get; set; }
+
+        public string GetPhone()
+        {
+            string amoPhone;
+
+            foreach (var item in this.CustomFieldsValues)
+            {
+                if (item.FieldId == 607465)
+                {
+                    amoPhone = item.Values[0].Value;
+                    return amoPhone; ;
+                }
+            }
+
+            return null;
+        }
     }
 }

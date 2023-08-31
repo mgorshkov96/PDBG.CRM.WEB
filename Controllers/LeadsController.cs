@@ -16,7 +16,7 @@ namespace PDBG.CRM.WEB.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        [Route("leads")]
+        [Route("Leads/List")]
         public async Task<ViewResult> List(string dateFrom, string dateTo, int agent = 0, int disp = 0, int page = 1)
         {
             if (String.IsNullOrEmpty(dateFrom) || String.IsNullOrEmpty(dateTo))
@@ -46,7 +46,7 @@ namespace PDBG.CRM.WEB.Controllers
             return View(leadsViewModel);
         }
 
-		[Route("leads/{id}")]
+		[Route("Leads/{id}")]
 		public async Task<ViewResult> Lead(int id)
         {
             var lead = await _leadRepository.Leads.FirstOrDefaultAsync(x => x.Id == id);

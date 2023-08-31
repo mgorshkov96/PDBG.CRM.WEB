@@ -2,12 +2,12 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace PDBG.CRM.WEB.Models.AmoEntities
+namespace PDBG.CRM.WEB.Models
 {
     [Table("t_amo_auth")]
     public class AmoAuth
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("client_id")]
         [JsonPropertyName("client_id")]
@@ -27,11 +27,11 @@ namespace PDBG.CRM.WEB.Models.AmoEntities
 
         [Column("refresh_token")]
         [JsonPropertyName("refresh_token")]
-        public string RefreshToken { get; set; }
+        public string? RefreshToken { get; set; }
 
         [Column("access_token")]
         [JsonPropertyName("access_token")]
-        public string AccessToken { get; set; }
+        public string? AccessToken { get; set; }
 
         [Column("redirect_uri")]
         [JsonPropertyName("redirect_uri")]

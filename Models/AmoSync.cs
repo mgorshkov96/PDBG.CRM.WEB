@@ -1,78 +1,71 @@
-﻿using PDBG.CRM.WEB.Models.AmoEntities;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
+using PDBG.CRM.WEB.Models.JsonEntities;
+using PDBG.CRM.WEB.Models.Repositories;
+using System.Net.Http;
 
 namespace PDBG.CRM.WEB.Models
 {
     public class AmoSync
     {
-        private AppContext db;
+        private IAmoAuthRepository _amoAuthRepository;        
+        static HttpClient httpClient = new HttpClient();
+        private const string AMO_AUTH_URL = "https://gladilin.amocrm.ru/oauth2/access_token";
 
-        private int leadId;
-
-        public AmoLead? AmoLead { get; set; }
-
-        public AmoContact? AmoContact { get; set; }
-
-        public Lead? Lead { get; set; }
-
-        public Client? Client { get; set; }
-
-        public AmoSync(AppContext context, int leadId)
+        public AmoSync(IAmoAuthRepository amoAuthRepository)
         {
-            this.db = context;
-            this.leadId = leadId;
+            _amoAuthRepository = amoAuthRepository;
         }
 
-        public bool Synchronize()
-        {
-            return true;
-        }
+        public AmoContact Contact { get; set; }
 
-        private void FillLead()
-        {
-            var disp = db.Employees.FirstOrDefault(e => e.AmoId == AmoLead.ResponsibleUserId);
+        public AmoLead Lead { get; set; }
 
-            if (disp != null)
+        public async Task RequestLeadAndContactAsync(int leadId)
+        {
+            string accessToken = await GetNewAccessTokenAsync();
+
+            httpClient.DefaultRequestHeaders.Remove("Authorization");
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
+
+            var amoLead = await httpClient.GetFromJsonAsync<AmoLead>($"https://gladilin.amocrm.ru/api/v4/leads/{leadId}?with=contacts");
+            Lead = amoLead;
+
+            var amoContacts = amoLead.Embedded.Contacts;
+            AmoContact? embeddedContact = amoContacts[0];
+
+            foreach (var contact in amoContacts)
             {
-                Lead = new Lead(
-                    AmoLead.Id,
-                    disp.Id,
-                    Client.Id);
-
-                foreach (var item in AmoLead.CustomFieldsValues)
+                if (contact.IsMain == true)
                 {
-                    switch (item.FieldId)
-                    {
-                        case 648355:
-                            Lead.Dead = item.Values[0].Value;
-                            break;
-                        case 648113:
-                            Lead.Comment = item.Values[0].Value;
-                            break;
-                        case 648279:
-                            Lead.Address = item.Values[0].Value;
-                            break;
-                        case 866055:
-                            Lead.NoteToAddress = item.Values[0].Value;
-                            break;
-                    }
+                    embeddedContact = contact;
                 }
             }
+
+            var amoContact = await httpClient.GetFromJsonAsync<AmoContact>($"https://gladilin.amocrm.ru/api/v4/contacts/{embeddedContact.Id}?with=contacts");
+            Contact = amoContact;
         }
 
-        private void FillClient()
+        public async Task<string?> GetNewAccessTokenAsync()
         {
-            Client.Id = AmoContact.Id;
-            Client.Name = AmoContact.Name;
-            string phone;
+            var amoAuthReq = _amoAuthRepository.AmoAuthes.FirstOrDefault();
 
-            foreach (var item in AmoContact.CustomFieldsValues)
+            if (String.IsNullOrEmpty(amoAuthReq.AccessToken))
             {
-                if (String.Equals(item.FieldName, "Телефон"))
-                {
-                    phone = item.Values.FirstOrDefault().Value;
-                    Client.Phone = phone;
-                }
-            }           
+                amoAuthReq.GrantType = "authorization_code";
+            }
+            else
+            {
+                amoAuthReq.GrantType = "refresh_token";
+            }
+
+            JsonContent authContent = JsonContent.Create(amoAuthReq);
+            using var authResponse = await httpClient.PostAsync(AMO_AUTH_URL, authContent);
+            var amoAuth = await authResponse.Content.ReadFromJsonAsync<AmoAuth>();            
+            amoAuthReq.RefreshToken = amoAuth.RefreshToken;
+            amoAuthReq.AccessToken = amoAuth.AccessToken;
+            await _amoAuthRepository.UpdateAuthAsync(amoAuthReq);
+            return amoAuth.AccessToken;            
         }
     }
 }

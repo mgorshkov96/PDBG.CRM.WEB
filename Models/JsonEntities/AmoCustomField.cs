@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace PDBG.CRM.WEB.Models.AmoEntities
+namespace PDBG.CRM.WEB.Models.JsonEntities
 {
     public class AmoCustomField
     {

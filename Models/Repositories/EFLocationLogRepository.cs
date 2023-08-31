@@ -2,8 +2,8 @@
 {
     public class EFLocationLogRepository : ILocationLogRepository
     {
-        private AppContext _context;
-        public EFLocationLogRepository(AppContext context)
+        private PDBGContext _context;
+        public EFLocationLogRepository(PDBGContext context)
         {
             _context = context;
         }

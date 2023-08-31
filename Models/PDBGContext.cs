@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PDBG.CRM.WEB.Models.AmoEntities;
 
 namespace PDBG.CRM.WEB.Models
 {
-    public class AppContext : DbContext
+    public class PDBGContext : DbContext
     {
-        public AppContext(DbContextOptions<AppContext> options)
+        public PDBGContext(DbContextOptions<PDBGContext> options)
             : base(options) 
         {
             //Database.EnsureCreated();
@@ -16,8 +15,10 @@ namespace PDBG.CRM.WEB.Models
         public DbSet<LocationLog> LocationLogs { get; set; }
         public DbSet<AgentState> AgentStates { get; set; }
         public DbSet<Lead> Leads { get; set; }       
-        public DbSet<AmoAuth> AmoAuths { get; set; }
+        public DbSet<AmoAuth> AmoAuthes { get; set; }
         public DbSet<LeadStatus> LeadStatuses { get; set; }
+        public DbSet<AgentSearch> AgentSearches { get; set; }
+        public DbSet<ApiKey> ApiKeys { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

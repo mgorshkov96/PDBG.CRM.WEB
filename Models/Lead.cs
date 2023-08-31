@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using PDBG.CRM.WEB.Models.JsonEntities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PDBG.CRM.WEB.Models
 {
@@ -56,6 +57,38 @@ namespace PDBG.CRM.WEB.Models
         {            
             Created = DateTime.Now.AddHours(3);
             StatusId = 1;
+        }
+
+        public Lead(AmoLead amoLead, int clientId)
+        {
+            Id = amoLead.Id;
+            Created = DateTime.Now.AddHours(3);
+            StatusId = 1;
+            DispId = amoLead.ResponsibleUserId;
+            ClientId = clientId;
+            Sum = 0;
+
+            foreach (var item in amoLead.CustomFieldsValues)
+            {
+                switch (item.FieldId)
+                {                   
+                    case 648113:
+                        Comment = item.Values[0].Value;
+                        break;
+                    case 648279:
+                        Address = item.Values[0].Value;
+                        break;
+                    case 648355:
+                        Dead = item.Values[0].Value;
+                        break;                  
+                    case 859127:
+                        AgentId = item.Values[0].EnumId;
+                        break;
+                    case 866055:
+                        NoteToAddress = item.Values[0].Value;
+                        break;
+                }
+            }
         }
     }
 }

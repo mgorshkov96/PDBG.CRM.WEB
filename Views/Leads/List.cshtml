@@ -41,7 +41,7 @@
                 @foreach (var lead in Model.Leads)
                 {
                     <tr>
-                        <td><a href="~/leads/@Html.DisplayFor(modelLead => lead.Id)">@Html.DisplayFor(modelLead => lead.Id)</a></td>
+                        <td><a href="~/Leads/@Html.DisplayFor(modelLead => lead.Id)">@Html.DisplayFor(modelLead => lead.Id)</a></td>
                         <td>@lead.Created.ToString("dd.MM.yyyy HH:mm")</td>
                         <td>@Html.DisplayFor(modelLead => lead.Status.Name)</td>
                         <td>@Html.DisplayFor(modelLead => lead.Disp.Name)</td>

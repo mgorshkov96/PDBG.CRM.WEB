@@ -1,4 +1,4 @@
-﻿namespace PDBG.CRM.WEB.Models.AmoEntities
+﻿namespace PDBG.CRM.WEB.Models.JsonEntities
 {
     public class AmoWebhookLead
     {

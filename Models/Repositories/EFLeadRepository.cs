@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PDBG.CRM.WEB.Models.Repositories
 {
     public class EFLeadRepository : ILeadRepository
     {
-        private AppContext _context;
-        public EFLeadRepository(AppContext context)
+        private PDBGContext _context;
+        public EFLeadRepository(PDBGContext context)
         {
             _context = context;
         }
@@ -40,5 +41,37 @@ namespace PDBG.CRM.WEB.Models.Repositories
             return await leads.ToListAsync();
         }
 
+        public async Task<Lead>? GetLeadByIdAsync(int id)
+        {
+            var lead = await Leads.FirstOrDefaultAsync(x => x.Id == id);
+            return lead;
+        }
+
+        public async Task SaveLeadAsync(Lead lead)
+        {
+            var check = await Leads.FirstOrDefaultAsync(x => x.Id == lead.Id);
+
+            if (check != null)
+            {
+                check.DispId = lead.DispId;
+                check.AgentId = lead.AgentId;
+                check.ClientId = lead.ClientId;
+                check.Dead = lead.Dead;
+                check.Address = lead.Address;
+                check.Lat = lead.Lat;
+                check.Lng = lead.Lng;
+                check.NoteToAddress = lead.NoteToAddress;
+                check.Comment = lead.Comment;
+                check.Sum = lead.Sum;
+                check.RejectionReason = lead.RejectionReason;
+                _context.Leads.Update(check);
+            }
+            else
+            {
+                await _context.Leads.AddAsync(lead);
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
