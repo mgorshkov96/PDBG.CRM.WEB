@@ -1,14 +1,22 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.EntityFrameworkCore;
-using PDBG.CRM.WEB.Controllers;
 using PDBG.CRM.WEB.Models;
 using PDBG.CRM.WEB.Models.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 string? connection = builder.Configuration.GetConnectionString("Default");
+string? connectionIdentity = builder.Configuration.GetConnectionString("Identity");
 
 // Add services to the container.
-builder.Services.AddDbContext<PDBG.CRM.WEB.Models.PDBGContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 33))));
+builder.Services.AddDbContext<PDBGContext>(options => options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 33))));
+builder.Services.AddDbContext<AppIdentityDbContext>(options => options.UseMySql(connectionIdentity, new MySqlServerVersion(new Version(8, 0, 33))));
+
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppIdentityDbContext>()
+    .AddDefaultTokenProviders();
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IAgentStateRepository, EFAgentStateRepository>();
 builder.Services.AddTransient<ILeadRepository, EFLeadRepository>();
@@ -32,6 +40,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseStatusCodePages();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 

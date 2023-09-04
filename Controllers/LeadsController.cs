@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PDBG.CRM.WEB.Models.Repositories;
 using PDBG.CRM.WEB.Models.ViewModels;
 
 namespace PDBG.CRM.WEB.Controllers
 {
-    public class LeadsController : Controller
+	[Authorize]
+	public class LeadsController : Controller
     {
         private ILeadRepository _leadRepository;
         private IEmployeeRepository _employeeRepository;

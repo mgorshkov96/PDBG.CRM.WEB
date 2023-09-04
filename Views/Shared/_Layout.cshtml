@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -17,9 +18,9 @@
             <div class="account">
                 <ul>
                     <li>
-                        <a class="menu-ref" href=" #">Аккаунт</a>
-                        <ul class="sub-account">
-                            <li><a href="#">Выход</a></li>
+                        <a id="btn-account" class="menu-ref" href=" #">Аккаунт</a>
+                        <ul id="sub-account" class="sub-account">
+                            <li><a asp-controller="Account" asp-action="Logout">Выход</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -29,17 +30,24 @@
             <nav class="flex-nav menu">
                 <ul class="menu">
                     <li>
-                        <span href="#" class="menu-first">Местоположение</span>
+                        <span class="menu-first">Местоположение</span>
                         <ul class="submenu">
                             <li><a class="menu-ref" href="~/Map/AgentsOnMap">Агенты на карте</a></li>
                             <li><a class="menu-ref" href="#">История перемещений</a></li>
                         </ul>
                     </li>
                     <li>
-                        <span href="#" class="menu-first">Заявки</span>
+                        <span class="menu-first">Заявки</span>
                         <ul class="submenu">
                             <li><a class="menu-ref" href="~/Leads/List">Список заявок</a></li>
                             <li><a class="menu-ref" href="#">Заявки в работе</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="menu-first">Настройки</span>
+                        <ul class="submenu">
+                            <li><a class="menu-ref" asp-controller="Admin" asp-action="Index">Пользователи</a></li>
+                            <li><a class="menu-ref" asp-controller="RoleAdmin" asp-action="Index">Роли</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -48,6 +56,7 @@
                 @RenderBody()
             </main>
         </div>
-    </div>   
+    </div>
+    <script src="~/js/account.js"></script>
 </body>
 </html>

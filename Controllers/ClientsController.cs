@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PDBG.CRM.WEB.Models;
 
 namespace PDBG.CRM.WEB.Controllers
 {
-    public class ClientsController : Controller
+	[Authorize]
+	public class ClientsController : Controller
     {
         Models.PDBGContext db;
         public ClientsController(Models.PDBGContext context)
