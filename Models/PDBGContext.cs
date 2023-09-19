@@ -19,8 +19,9 @@ namespace PDBG.CRM.WEB.Models
         public DbSet<LeadStatus> LeadStatuses { get; set; }
         public DbSet<AgentSearch> AgentSearches { get; set; }
         public DbSet<ApiKey> ApiKeys { get; set; }
+		public DbSet<EmployeeAccess> Accesses { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -28,7 +29,9 @@ namespace PDBG.CRM.WEB.Models
             {
                 a.HasNoKey();
                 a.ToView("v_agent_state");
-            });            
-        }
+            });
+
+			
+		}
     }
 }

@@ -9,7 +9,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th>ID</th>
+					
 					<th>Имя</th>
 					<th>Email</th>
 					<th></th>
@@ -19,14 +19,14 @@
 			<tbody>
 				@if (Model.Count() == 0)
 				{
-					<tr><td colspan="4">Пользователи не найдены</td></tr>
+					<tr><td colspan="3">Пользователи не найдены</td></tr>
 				}
 				else
 				{
 					foreach (var user in Model)
 					{
 						<tr>
-							<td>@user.Id</td>
+							
 							<td>@user.UserName</td>
 							<td>@user.Email</td>
 							<td>

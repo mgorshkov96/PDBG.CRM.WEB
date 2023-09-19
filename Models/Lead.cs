@@ -59,7 +59,7 @@ namespace PDBG.CRM.WEB.Models
             StatusId = 1;
         }
 
-        public Lead(AmoLead amoLead, int clientId)
+        public Lead(AmoInputLead amoLead, int clientId)
         {
             Id = amoLead.Id;
             Created = DateTime.Now.AddHours(3);

@@ -10,14 +10,14 @@ namespace PDBG.CRM.WEB.Models
         [Column("service_name")]
         public string ServiceName { get; set; }
 
-        [Column("api_value")]
+        [Column("api_key")]
         public string ApiValue { get; set; }
         
         public ApiKey(int id, string serviceName, string apiValue) 
         {
             Id = id;
             ServiceName = serviceName;
-            ApiValue = apiValue;
+			ApiValue = apiValue;
         }
     }
 }

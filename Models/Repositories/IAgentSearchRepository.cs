@@ -6,5 +6,7 @@ namespace PDBG.CRM.WEB.Models.Repositories
     {
         IQueryable<AgentSearch> AgentSearches { get; }
         Task AddAgentSearchAsync(AgentSearch agentSearch);
-    }
+        Task DeleteAgentSearchesAsync(int leadId);
+
+	}
 }

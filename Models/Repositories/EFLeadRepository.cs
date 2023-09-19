@@ -53,7 +53,8 @@ namespace PDBG.CRM.WEB.Models.Repositories
 
             if (check != null)
             {
-                check.DispId = lead.DispId;
+				check.StatusId = lead.StatusId;
+				check.DispId = lead.DispId;
                 check.AgentId = lead.AgentId;
                 check.ClientId = lead.ClientId;
                 check.Dead = lead.Dead;
@@ -72,6 +73,6 @@ namespace PDBG.CRM.WEB.Models.Repositories
             }
 
             await _context.SaveChangesAsync();
-        }
+        }       
     }
 }

@@ -27,5 +27,23 @@ namespace PDBG.CRM.WEB.Models.Repositories
                           select d).ToListAsync();
             return agents;
         }
+
+        public async Task<Employee> UpdateEmployee(Employee employee)
+        {
+            var emp = await Employees.FirstOrDefaultAsync(x => x.Id == employee.Id);
+
+            if (emp != null)
+            {
+                emp.Name = employee.Name;
+                emp.RoleId = employee.RoleId;
+                emp.Phone = employee.Phone;
+                emp.StatusId = employee.StatusId;
+                emp.Access = employee.Access;
+                _context.Employees.Update(emp);
+                await _context.SaveChangesAsync();
+			}
+
+            return emp;
+		}
     }
 }

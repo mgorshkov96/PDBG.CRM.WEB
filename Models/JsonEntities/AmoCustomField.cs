@@ -22,8 +22,5 @@ namespace PDBG.CRM.WEB.Models.JsonEntities
 
         [JsonPropertyName("enum_id")]
         public int? EnumId { get; set; }
-
-        [JsonPropertyName("enum")]
-        public string? Enum { get; set; }
     }
 }

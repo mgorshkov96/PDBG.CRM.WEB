@@ -26,6 +26,12 @@ builder.Services.AddTransient<IAgentSearchRepository, EFAgentSearchRepository>()
 builder.Services.AddTransient<IAmoAuthRepository, EFAmoAuthRepository>(); 
 builder.Services.AddTransient<IClientRepository, EFClientRepository>();
 builder.Services.AddTransient<IApiKeyRepository, EFApiKeyRepository>();
+builder.Services.AddTransient<IEmployeeAccessesRepository, EFEmployeeAccessesRepository>();
+//builder.Services.AddHttpClient<AmoService>(httpClient =>
+//{
+//    httpClient.BaseAddress = new Uri("https://gladilin.amocrm.ru/");	
+//});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

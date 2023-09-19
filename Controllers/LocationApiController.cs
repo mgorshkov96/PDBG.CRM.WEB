@@ -1,36 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PDBG.CRM.WEB.Models;
+using PDBG.CRM.WEB.Models.Repositories;
 using Newtonsoft.Json.Linq;
 
 namespace PDBG.CRM.WEB.Controllers
 {
     [Route("api/location")]
     public class LocationApiController : Controller
-    {
-        Models.PDBGContext db;
-        public LocationApiController(Models.PDBGContext context)
+    {        
+        private ILocationLogRepository _locationLogRepository;
+        private IAgentStateRepository _agentStateRepository;
+
+		public LocationApiController(ILocationLogRepository locationLogRepository, IAgentStateRepository agentStateRepository)
         {
-            this.db = context;
+            _locationLogRepository = locationLogRepository;
+            _agentStateRepository = agentStateRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<AgentState>>> AgentLocations()
+        public async Task<IActionResult> AgentLocations()
         {           
-            var locations = await db.AgentStates.ToListAsync();
-            return (locations);
+            var locations = await _agentStateRepository.AgentStates.ToListAsync();
+            return Ok(locations);
         }
 
         [HttpPost]
-        public async Task<ActionResult<LocationLog>> AddLog([FromBody]LocationLog locationLog)
+        public async Task<IActionResult> AddLog([FromBody]LocationLog locationLog)
         {
             if (locationLog == null)
             {
                 return BadRequest();
             }           
 
-            db.LocationLogs.Add(locationLog);
-            await db.SaveChangesAsync();
+            await _locationLogRepository.AddLocationLogAsync(locationLog);
+            
             return Ok(locationLog);
         }
     }

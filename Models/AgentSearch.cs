@@ -25,5 +25,7 @@ namespace PDBG.CRM.WEB.Models
             AgentId = agentId;
             Distance = distance;
         }
+
+        public Lead? Lead { get; set; }
     }
 }
